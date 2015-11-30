@@ -38,6 +38,14 @@ html, body {
 
 /*-----------------------------PLANET-----------------------------*/
 
+.mercury-orbit, .mercury-rotation {
+  margin-left: -65px;
+  margin-top: -65px; 
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  pointer-events:none;
+}
 
 .mercury-orbit {
   box-sizing:border-box;

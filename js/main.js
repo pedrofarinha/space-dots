@@ -2,44 +2,8 @@
 
 $(function init() {
     generateAsteroids();
-
-    generatePlanets()
     
 });
-
-
-
-function generatePlanets(){
-
-     for (var p in data.planets){
-        var planetOrbit = $(
-            "."+data.planets[p].name+"-orbit ", 
-            "."+data.planets[p].name+"-rotation"
-        );
-
-        var distance = data.planets[p].distance;
-        var color = data.planets[p].color;
-        var speed = data.planets[p].speed;
-
-        planetOrbit.css({
-                top: "50%",
-                left: "0",
-                marginTop: -(distance/2),
-                marginLeft: -(distance/2),
-                borderRadius: "50%",
-                width: distance,
-                height: distance,
-                background: color,
-                animationDuration: speed
-        });
-
-        console.log(planetOrbit.html())
-    }
-
-};
-
-
-
 
 
 function generateAsteroids(){
