@@ -1,0 +1,153 @@
+html, body {
+  /* usefull to apply background color or image to all screen*/
+}
+
+
+
+
+/* TEST ELEMENT \/ - all properties used to center in the screen */
+.test{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  height: 280px;
+  width: 280px;
+  margin-top: -140px; 
+  margin-left: -140px;
+  background-color: grey;
+}
+/* TEST ELEMENT /\ - all properties used to center in the screen */
+
+
+
+
+/*--------------------------ORBIT LINE--------------------------*/
+
+/*This is a disk with a border to create the orbit line.
+this is in the same div as .planet-orbit*/
+.orbit {
+  /*used to create the orbit line */
+  border: 3px dashed #666;
+  border-radius: 50%;  
+
+  /*EXPERIMENTAL - used to make the border inwards to avoid
+  increasing the div size
+  box-sizing:border-box;
+  -webkit-box-sizing: border-box;
+  */
+}
+
+
+
+
+/*----------------------------SUN-------------------------------*/
+
+/*this is just a disk in the center of the screen - no motion*/
+
+#sun {
+  /* Positions the top-left corner of the image to be
+  in the middle of the box */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  /* Pushes the image up and left to be in the center of
+  the screen */
+  margin-top: -100px; 
+  margin-left: -100px;
+
+  /*defines the size of the image*/
+  height: 200px;
+  width: 200px;
+
+  /*creates a circle and gives it color*/
+  border-radius: 50%;
+  background-color: #fae20a; 
+}
+
+
+
+
+/*-------------------ORBIT AND ROTATION DISKS-----------------------*/
+
+
+/*This code creates 2 disks in the center of the screen:
+  1 - .planet-orbit - this is the same as .orbit - This part
+      defines it's size and position(screen center)
+  2 - .planet-spin - a disk that contains the planet in its top
+      border used to create the motion. It is animated in the 
+      bottom of the page. */
+.planet-orbit, .planet-rotation {
+  /* Positions the top-left corner of the image to be
+  in the middle of the box */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  /* Pushs the image up and left to be in the center of
+  the screen */
+  margin-left: -140px;
+  margin-top: -140px;
+
+  /*defines the size of the image*/   
+  width: 280px;
+  height: 280px;
+}
+
+
+
+
+/*--------------------------PLANET-----------------------------*/
+
+
+/*this is the planet itself, it is contained inside the 
+planet-spin in its top border. Its nothing more than a simple
+circle inside a moving square that rotates.
+This code puts it in the top center of the containing div.*/
+#planet {
+  /*it positions the element in the top center of the containing div*/
+  position: absolute;
+  top: 0;
+  left: 50%;
+
+  /*if i remove 1px (or add) here, I am able to compensate for
+  the border size(consider adding the border-box to .orbit*/
+  margin-top: -15px;
+  margin-left: -15px;
+
+  height: 30px;
+  width: 30px;
+
+  background-color: #a65e22;
+  border-radius: 50%;
+}
+
+
+/*--------------------------ANIMATIONS--------------------------*/
+
+
+/*This is a keyframe rule. It sets the name of the animation to "trajectory"
+  - 100%  - defines that it starts another circle when the animation is 100% complete
+  - rotate - a method used to make turn, in this case a full spin clockwise(360deg)*/
+@keyframes trajectory {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+
+/*This is some code used in the spin disk to make it rotate with the planet 
+contained inside it. It uses the key frames defined above with animation
+name "trajectory".
+  - 5s is the time we define for each orbit
+  - linear sets the same speed from start to end
+  - infinite makes the animation continue forever
+*/
+.planet-rotation {
+  /*TEST ELEMENT*/
+  opacity: 0.4;
+  background-color: red;
+  /*TEST ELEMENT*/
+  animation: trajectory 5s linear infinite;
+
+}
