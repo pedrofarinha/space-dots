@@ -1,93 +1,169 @@
 "use strict";
 
 $(function init() {
+
     generateAsteroids();
+
+    generatePlanets()
     
 });
 
+
+function generatePlanets(){
+    var planetOrbit
+
+    /*set properties for each planet using data in data.js*/
+    for (var p in data.planets){
+
+        //select the planet elements: Orbit, Rotation, Shape
+        var planetOrbit = $("."+data.planets[p].name+"-orbit");
+        var planetRotation = $("."+data.planets[p].name+"-rotation");
+        var planetShape = $("."+data.planets[p].name+"-shape");
+
+        /*get data from data.js*/
+        //distance: distance from the center of the sun;
+        //diameter: planet diameter;
+        //color: planet color;
+        //orbit: orbit line color;
+        //speed: orbital period(seconds)
+        var distance = data.planets[p].distance;
+        var diameter = data.planets[p].diameter;
+        var color = data.planets[p].color;
+        var orbit = data.planets[p].orbit;
+        var speed = data.planets[p].speed;
+
+        //center orbit and planet with negative margin.
+        //add 1px to marginPlanet to compensate for orbit border
+        var marginOrbit = -distance/2;
+        var marginPlanet = -diameter/2 + 1;
+
+        //set orbit, rotation and shape elements properties
+        planetOrbit.add(planetRotation).css({
+            "margin-top": marginOrbit +"px",
+            "margin-left": marginOrbit +"px",
+            "width": distance + "px",
+            "height": distance + "px",
+            "animationDuration": speed + "s"
+        });
+
+        planetOrbit.css({
+            "border-color": orbit, 
+            "border-width":"1px", 
+            "border-style":"solid"
+        });
+
+        planetShape.css({
+            "width": diameter + "px",
+            "height": diameter + "px",
+            "margin-top": marginPlanet + "px", 
+            "margin-left": marginPlanet +"px",
+            "background": color,
+        }); 
+
+        /*DEBUG-----------------------------------------*/
+
+        console.log(
+            "planet: "+ data.planets[p].name +"\n",
+            "distance: "+ distance + "px" + "\n",
+            "diameter: "+ diameter + "px" +"\n",
+            "speed: "+ speed + "s" + "\n"
+            );
+
+    }
+};
 
 function generateAsteroids(){
 
     var asteroidCount = 0;
 
-    //is this correct?
-    var diskNumber, newDisk, diskClass, diskSpeed, asteroidNumber,
-    newAsteroid, asteroidClass, beltWidth, beltPosition, center,
-    radius, angle, posX, posY, beltIndex, size, margin, colors, color;
-
     /*create 8 disks with different rotation speeds and a certain number 
     of asteroids each*/
-    for(var d = 0; d < 9; d++){
+    for(var d = 0; d < 8; d++){
 
         //append new disk
-        diskNumber = "d" + d;
-        newDisk ='<div class="asteroid-disk '+ diskNumber +'"></div>';
+        var diskNumber = "d" + d;
+        var newDisk ='<div class="asteroid-disk '+ diskNumber +'"></div>';
         $(".asteroid-belt").append(newDisk);
-        diskClass = $("." + diskNumber);
+        var diskClass = $("." + diskNumber);
 
-        //set a random speed for the disk
-        diskSpeed = (Math.random()*100 + 100) + "s";
-        diskClass.css("animationDuration", diskSpeed);
+        //set a random speed for the disk in a given range
+        var speed = Math.floor(Math.random()*130 + 70);
 
-        //populate the disk with 170 asteroids. each one has its properties
-        for (var a = 0; a < 300; a++){
+        //distance from the center of the sun
+        var distance = data.asteroids.distance;
+
+        diskClass.css({
+            "animationDuration": speed + "s",
+            "margin-left": -distance/2 +"px",
+            "margin-top": -distance/2 +"px",
+            "width": distance+"px",
+            "height": distance+"px"
+        });
+
+        //populate the disk with a certain amount of asteroids
+        //each asteroid has its properties
+        var asteroidAmount = data.asteroids.amount/8
+        for (var a = 0; a < asteroidAmount; a++){
             asteroidCount++;
 
             //append new asteroid
-            asteroidNumber = "a" + asteroidCount;
-            newAsteroid = '<div class="asteroid '+ asteroidNumber +'"></div>'
+            var asteroidNumber = "a" + asteroidCount;
+            var newAsteroid = '<div class="asteroid '+ asteroidNumber +'"></div>'
             diskClass.append(newAsteroid);
-            asteroidClass = $("." + asteroidNumber);
+
+            var asteroidClass = $("." + asteroidNumber);
 
             /*distribute asteroids around a circle and vary the radius to change 
             the asteroid belt width using beltWidth. set a random beltPosition*/
-            beltWidth = 60;
-            beltPosition = Math.random()*beltWidth + 0;
+            var beltWidth = data.asteroids.beltWidth;
+            var beltPosition = Math.random()*beltWidth + 0;
 
             //calculate a point in the circle using a random angle
-            center = 212;
-            radius = (center - beltWidth / 2) + beltPosition;
-            angle = Math.random()*360 + 0;
-            posX = center + radius * Math.cos(angle);
-            posY = center + radius * Math.sin(angle);
+            var center = distance/2;
+            var radius = (center - beltWidth/2) + beltPosition;
+            var angle = Math.random()*360 + 0;
+            var posX = center + radius * Math.cos(angle);
+            var posY = center + radius * Math.sin(angle);
 
             /*creat an index from 0 to 10 based on the asteroid distance from the 
             center of the belt. the higher the index is, the smaller the asteroids get*/
-            beltIndex = Math.abs(1-beltPosition/(beltWidth/2))*10;
+            var beltIndex = Math.abs(1-beltPosition/(beltWidth/2))*10;
 
             if (beltIndex > 7) {
-                size = Math.random()*(0.75) + 0.5;
+                var size = Math.random()*0.75 + 0.5;
 
             }else if (beltIndex > 3) {
-                size = Math.random()*1.5 + 0.75;
+                var size = Math.random()*1.5 + 0.75;
 
             }else if (beltIndex > 4) {
-                size = Math.random()*2.2 + 0.9;
+                var size = Math.random()*2.2 + 0.9;
 
             }else {
-                size = Math.random()*2 + 0.9;
+                var size = Math.random()*2 + 0.9;
             }
 
             //correct asteroid position relative to the containing div
-            margin = -size;
+            var margin = -size;
 
             //select a random asteroid color
-            colors = ["#D5D5D5"];
-            color = colors[Math.floor(Math.random()*colors.length)];
+            var colors = ["#D5D5D5"];
+            var color = colors[Math.floor(Math.random()*colors.length)];
 
             //set the new asteroid properties
             $(asteroidClass).css({
-                top: posY + 'px',
-                left: posX + 'px',
-                marginTop: margin,
-                marginLeft: margin,
-                borderRadius: "50%",
-                width: size,
-                height: size,
-                background: color
+                "top": posY + 'px',
+                "left": posX + 'px',
+                "margin-top": margin,
+                "margin-left": margin,
+                "border-radius": "50%",
+                "width": size,
+                "height": size,
+                "background": color
             });
         };
     };
+
+    /*DEBUG-----------------------------------------*/
 
     console.log(
         "number of disks: "+ d +"\n",
