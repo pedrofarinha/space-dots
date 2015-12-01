@@ -9,7 +9,6 @@ $(function init() {
 });
 
 
-
 function generatePlanets(){
     var planetOrbit
 

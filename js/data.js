@@ -21,7 +21,7 @@ var data =
 		"diameter": "26",
 		"color": "#31AAF6",
 		"orbit": "#31AAF6",
-		"speed": "10"
+		"speed": "16"
 	},{
 		"name": "moon",
 		"distance": "42",
@@ -51,12 +51,9 @@ var data =
 		"orbit": "#F3AAB8",
 		"speed": "250"
 	}],
-
 	"asteroids": {
 		"distance": "435",
 		"beltWidth": "60",
-		"speedMax": "200",
-		"speedMin": "170",
 		"amount": "900"
 	}
 }
